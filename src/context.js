@@ -1,10 +1,17 @@
 
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useReducer } from 'react'
 import { useCallback } from 'react'
 import data from  './data.json'
+import cartItems from './cart-items'
+import { reducer } from './reducer'
 
 
-const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a'
+const initialState = {
+    foods : cartItems,
+    totalItems: 0,
+    totalAmount: 0
+
+}
 
 
 const AppContext = React.createContext()
@@ -12,42 +19,31 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [foods, setFoods] = useState([]);
+  const [totalItems, setTotalItems] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
 
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-    const fetchFoods = async () => {
-        setLoading(true)
-        try{
-            const response = await fetch(url)
-            const data = await response.json()
-            // console.log(data);
-            const { drinks } = data
-            
-            if (drinks) {
-                
-                const newFoods = drinks.map((item)=> {
-                    const {strDrink, idDrink, strDrinkThumb} = item;
-                    return {id: idDrink, name: strDrink, img: strDrinkThumb};
-                    
-                })
-                setFoods(newFoods);
-            } else {
-                setFoods([])
-            }
-            setLoading(false);
+    const increase = (id) => {
+        return dispatch({type: 'inc', payload: id});
+    }
 
-        } catch (error){
-            console.log(error)
-            setLoading(false);
-        }
+    const decrease = (id) => {
+        return dispatch({type: 'dec', payload: id});
+    }
+
+    const getTotal = (id) => {
+        return dispatch({type: 'getTotal', payload: id});
     }
 
     useEffect(()=>{
-        fetchFoods();
-    },[])
+        dispatch({type: 'getTotal'})
+        
+    },[state.foods])
 
 
     return (
-        <AppContext.Provider value={{loading, foods}}>
+        <AppContext.Provider value={{loading, ...state, increase, decrease, getTotal}}>
             {children}
         </AppContext.Provider>
     )

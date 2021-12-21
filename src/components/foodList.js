@@ -2,10 +2,11 @@ import React from 'react'
 import { useGlobalContext } from '../context'
 import Loading from './Loading';
 import SingleItem from './SingleItem';
+import { Link } from 'react-router-dom'
 
 
 const FoodList = () => {
-    const {loading, newFoods, foods} = useGlobalContext();
+    const {loading, foods, totalAmount, getTotal} = useGlobalContext();
 
     if (loading) {
         return <Loading/>
@@ -20,6 +21,12 @@ const FoodList = () => {
                 <SingleItem key={item.id} {...item}/>
                )
             })}
+          </div>
+          <div className='total'>
+          <h3 >Total Amount: {totalAmount}</h3>
+          <Link to='/checkout'>
+              <button className='btn'>Checkout</button>
+            </Link>
           </div>
         </section>
       )

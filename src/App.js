@@ -4,7 +4,9 @@ import Navbar  from './components/Navbar';
 import Home from './pages/home';
 import FoodList from './components/foodList';
 import Error from './components/Error';
+import CheckOut from './pages/checkout'
 const App =  () => {
+
 
     return (
        <Router>
@@ -15,6 +17,9 @@ const App =  () => {
                </Route>
                <Route path='/menu'>
                    <FoodList/>
+               </Route>
+               <Route path='/checkout'>
+                   <CheckOut/>
                </Route>
                <Route path='*'>
                    <Error/>

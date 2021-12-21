@@ -74,7 +74,13 @@ img {
 Buttons 
 ======
 */
-.btn,
+
+.btnContainer {
+  text-align: center;
+}
+
+
+.btn,.btnContainer h5,
 .btn-white,
 .btn-primary {
   text-transform: uppercase;
@@ -90,6 +96,13 @@ Buttons
   border-radius: var(--mainBorderRadius);
   display: inline-block;
 }
+
+.btnContainer h5 {
+  background-color: transparent;
+  color: #223;
+  margin:1rem;
+}
+
 .btn:hover {
   background: var(--primaryColor);
   color: var(--mainWhite);
@@ -134,7 +147,7 @@ Error
 }
 /* 
 ====== 
-Cocktails List 
+foods List 
 ======
 */
 
@@ -157,15 +170,36 @@ Cocktails List
   row-gap: 2rem;
   column-gap: 2rem;
   /* align-items: start; */
+  
 }
 @media screen and (min-width: 576px) {
   .foods-center {
     grid-template-columns: repeat(auto-fill, minmax(338.8px, 1fr));
   }
+  .total{
+    margin-left: 19%;
+    display: flex;
+    gap:48em;
+  }
+}
+
+/* 
+====== 
+CheckOut 
+======
+*/
+.checkout{
+  height: fit-content;
+  background-color: rgb(219, 231, 231);
+  width: 60vw;
+  margin-left: 20%;
+  text-align: center;
+  margin-top: 10%;
+  padding: 3rem;
 }
 /* 
 ====== 
-Cocktail 
+SingleItem 
 ======
 */
 
@@ -197,12 +231,10 @@ Cocktail
   font-size: 2rem;
 }
 
-/* 
-====== 
-Cocktail
-======
-*/
-
-.cocktail-section {
-  text-align: center;
+@media screen and (max-width: 600px) {
+  
+  .total{
+    text-align: center;
+    
+  }
 }
