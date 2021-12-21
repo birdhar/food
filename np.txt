@@ -1,0 +1,68 @@
+import React,{Component, useReducer, useState,createContext, useContext,useEffect} from "react"
+
+
+const reducer = (state, action) => {
+    if (action.type === 'add') {
+        return state.map((todo)=>{
+            if (action.id === todo.id) {
+                return {...todo, count:todo.count + 1}
+            }
+        })
+    } else if (action.type === 'subtract') {
+        return state.map((todo)=>{
+            if (action.id === todo.id) {
+                return {...todo, count:todo.count - 1}
+            }
+        })
+    } else if (action.type === 'changePlace') {
+        return state.map((todo)=>{
+            if (action.id === todo.id) {
+                return {...todo, place:'c'}
+            }
+        })
+    } else {
+        throw new Error('error')
+    }
+}
+
+const initialState = [
+    {
+        id:1,
+        name: 'first',
+        place: 'a',
+        count: 5
+    },
+    {
+        id:2,
+        name: 'second',
+        place: 'b',
+        count: 7
+    }
+];
+
+function App() {
+    
+    const [todos, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <>
+            {todos.map((item)=>{
+                const {id, name, place,count} = item;
+                return (
+                    <div className="container" key={id}>
+                        <h1>{name}</h1>
+                        <h2>{place}</h2>
+                        <h3>{count}</h3>
+                        <button onClick={()=>dispatch({type: 'add', id:id})}>Add</button>
+                        <button onClick={()=>dispatch({type: 'subtract', id:id})}>Add</button>
+                        <button onClick={()=>dispatch({type: 'changePlace', id:id})}>Change Place</button>
+                    </div>
+                )
+            })}
+            
+        </>
+    )
+}
+
+
+export default App
